@@ -1,7 +1,7 @@
 
 
-let nombre //= "Vanina"
-let genero //= "F"
+let nombre = "Vanina"
+let genero = "F"
 let arrResumen = []
 let respCategorias = 0
 
@@ -37,17 +37,60 @@ if (genero == "F" || genero == "f") {
 // Bienvenida
 let bienvenida = document.getElementById("bienvenida");
 let saludo = document.getElementById("saludo");
+
 let dropCategoria = document.getElementById("dropCategoria");
 let pregCategoria = document.getElementById("pregCategoria");
+
+let dropProducto = document.getElementById("dropProducto");
+let pregProducto = document.getElementById("pregProducto");
+let pProducto = document.getElementById("pProducto");
+
+
+
+// -------------------------------------------
 bienvenida.innerHTML = `<h1>Bienvenid${genero} a Papeleria Alfa</h1>`;
 saludo.innerHTML = `<h2>Hola ${nombre}, ${buenas}</h2>`;
-dropCategoria.innerHTML = `<p><select id="procesador">
-<option>Selecciona uno...</option>
-<option> Papelería </option>
-<option> Cafetería </option>
-<option> Limpieza </option>
-</select></p>`
+
 pregCategoria.innerHTML = `Favor de escoger una categoria`
+
+
+dropCategoria.onchange = () => {
+  if (dropCategoria.options[dropCategoria.selectedIndex].innerText === "Papelería") {
+    pregProducto.innerHTML = `Favor de escoger un producto`
+    pProducto.innerHTML = `
+      <select id="dropProducto">
+        <option>Selecciona uno...</option>
+        <option> Boligrafo </option>
+        <option> Goma </option>
+        <option> Sacapuntas </option>
+      </select>`
+  } else if (dropCategoria.options[dropCategoria.selectedIndex].innerText === "Cafetería") {
+    pregProducto.innerHTML = `Favor de escoger un producto`
+    pProducto.innerHTML = `
+      <select id="dropProducto">
+        <option>Selecciona uno...</option>
+        <option> Nescafe Clasico </option>
+        <option> Cafe Molido </option>
+        <option> Te de Hierbabuena </option>
+      </select>`
+  } else if (dropCategoria.options[dropCategoria.selectedIndex].innerText === "Limpieza") {
+    pregProducto.innerHTML = `Favor de escoger un producto`
+    pProducto.innerHTML = `
+      <select id="dropProducto">
+        <option>Selecciona uno...</option>
+        <option> Sanitas </option>
+        <option> Papel higienico </option>
+        <option> Jabon liquido </option>
+      </select>`
+  } else {
+    pregProducto.innerHTML = ``
+    pProducto.innerHTML = ``
+  }
+}
+
+
+
+
 // Comprobamos el password
 
 // let x = 0;
