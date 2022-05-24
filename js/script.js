@@ -1,11 +1,10 @@
 
 
-let nombre //= "Vanina"
-let genero //= "F"
-let pass //= "123"
+let nombre = "Vanina"
+let genero = "F"
 let arrResumen = []
 let respCategorias = 0
-console.log(nombre + genero + pass)
+
 // Nombre de la persona
 if (typeof nombre === 'undefined') { nombre = prompt("escribe tu nombre"); }
 
@@ -16,13 +15,13 @@ let hora = fecha.getHours();
 let buenas;
 
 if (hora >= 0 && hora < 12) {
-  buenas = "Buenos días";
+  buenas = "buenos días";
 } else if (hora >= 12 && hora < 19) {
-  buenas = "Buenas tardes";
+  buenas = "buenas tardes";
 } else if (hora >= 19 && hora < 24) {
-  buenas = "Buenas noches";
+  buenas = "buenas noches";
 }
-alert(buenas + " " + nombre);
+
 
 // Hagamoslo incluyente
 if (typeof genero === 'undefined') { genero = prompt("Favor indicar como prefiere que me dirija a ud \n ( M-masculino, F-femenino y N-no definido ) "); }
@@ -35,51 +34,66 @@ if (genero == "F" || genero == "f") {
   genero = "e";
 }
 
+// Bienvenida
+let bienvenida = document.getElementById("bienvenida");
+let saludo = document.getElementById("saludo");
+let dropCategoria = document.getElementById("dropCategoria");
+let pregCategoria = document.getElementById("pregCategoria");
+bienvenida.innerHTML = `<h1>Bienvenid${genero} a Papeleria Alfa</h1>`;
+saludo.innerHTML = `<h2>Hola ${nombre}, ${buenas}</h2>`;
+dropCategoria.innerHTML = `<p><select id="procesador">
+<option>Selecciona uno...</option>
+<option> Papelería </option>
+<option> Cafetería </option>
+<option> Limpieza </option>
+</select></p>`
+pregCategoria.innerHTML = `Favor de escoger una categoria`
 // Comprobamos el password
 
-let x = 0;
-if (typeof pass === 'undefined') {
-  do {
-    if (x === 3) {
-      bye("Strike: 3, OUT!!!");
-      break;
-    } else {
-      if (x > 0) {
-        alert("Strike: " + x);
-      }
-      x++;
-    }
-    pass = prompt("escribe tu contraseña");
-  } while (pass !== "123");
-}
+// let x = 0;
+// if (typeof pass === 'undefined') {
+//   do {
+//     if (x === 3) {
+//       bye("Strike: 3, OUT!!!");
+//       break;
+//     } else {
+//       if (x > 0) {
+//         alert("Strike: " + x);
+//       }
+//       x++;
+//     }
+//     pass = prompt("escribe tu contraseña");
+//   } while (pass !== "123");
+// }
 
 class Producto {
-  constructor(nombre, modelo, precio, iva, inventario) {
+  constructor(id, nombre, modelo, precio, iva, inventario, imagen) {
+    this.id = id
     this.nombre = nombre
     this.modelo = modelo
     this.precio = precio
     this.iva = this.precio * (iva / 100)
     this.inventario = inventario
+    this.imagen = imagen
+
   }
 }
 // creamos los productos
-let boligrafo = new Producto("Boligrafo", "BIC-BOL-M250CA", 12, 16, 40);
-let goma = new Producto("Goma", "AZO-GOM-6590", 21.35, 16, 15);
-let sacapuntas = new Producto("Sacapuntas", "ACO-SAC-P3888", 785.79, 16, 3);
-let nescafe = new Producto("Nescafe Clasico 60g", "NES-NCF-60GR", 66.35, 16, 15);
-let cafe_molido = new Producto("Cafe Molido Intenso Veracruz, 454g", "CAP-CAF-VER", 143.31, 16, 5);
-let te_de_hierbabuena = new Producto("Te De Hierbabuena", "MCC-TE-HIERB25", 37.89, 16, 14);
-let sanitas = new Producto("Sanitas", "LKC-TOAI-92231", 219.20, 16, 50);
-let papel_higienico = new Producto("Papel higienico", "TOR-HIGT-700148", 558.65, 16, 85);
-let jabon_liquido = new Producto("Jabon liquido", "ALF-JABON-5480", 36.79, 16, 71);
+let boligrafo = new Producto(01, "Boligrafo", "BIC-BOL-M250CA", 12, 16, 40);
+let goma = new Producto(02, "Goma", "AZO-GOM-6590", 21.35, 16, 15);
+let sacapuntas = new Producto(03, "Sacapuntas", "ACO-SAC-P3888", 785.79, 16, 3);
+let nescafe = new Producto(04, "Nescafe Clasico 60g", "NES-NCF-60GR", 66.35, 16, 15);
+let cafe_molido = new Producto(05, "Cafe Molido Intenso Veracruz, 454g", "CAP-CAF-VER", 143.31, 16, 5);
+let te_de_hierbabuena = new Producto(06, "Te De Hierbabuena", "MCC-TE-HIERB25", 37.89, 16, 14);
+let sanitas = new Producto(07, "Sanitas", "LKC-TOAI-92231", 219.20, 16, 50);
+let papel_higienico = new Producto(08, "Papel higienico", "TOR-HIGT-700148", 558.65, 16, 85);
+let jabon_liquido = new Producto(09, "Jabon liquido", "ALF-JABON-5480", 36.79, 16, 71);
 
-if (pass === "123") {
-  alert("Hola " + nombre + ", " + "bienvenid" + genero + " a Papeleria Alfa ");
-  // Comienza el catalogo
-  inicioCuestionario();
-} else {
-  alert("Nos vemos pronto");
-}
+
+
+// Comienza el catalogo
+// inicioCuestionario();
+
 
 // console.log(fichaTecnica(boligrafo));
 function inicioCuestionario() {
@@ -105,7 +119,7 @@ function categorias(respuesta) {
     if (respProducto == 1) { respProducto = sanitas } else if (respProducto == 2) { respProducto = papel_higienico } else if (respProducto == 3) { respProducto = jabon_liquido }
 
   }
-  alert(fichaTecnica(respProducto));
+  // alert(fichaTecnica(respProducto));
   arrResumen.push(respProducto);
   respuesta = prompt(`Quieres ver otro articulo? \n S=Sí N=No`);
   if (respuesta === "si" || respuesta === "Si" || respuesta === "sí" || respuesta === "Sí" || respuesta === "s" || respuesta === "S" || respuesta === "") {
@@ -152,5 +166,5 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 function bye(mensaje) {
-  alert(mensaje);
+  // alert(mensaje);
 }
