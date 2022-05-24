@@ -1,7 +1,7 @@
 
 
-let nombre = "Vanina"
-let genero = "F"
+let nombre //= "Vanina"
+let genero //= "F"
 let arrResumen = []
 let respCategorias = 0
 
