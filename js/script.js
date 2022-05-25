@@ -1,7 +1,7 @@
 
 
-let nombre //= "Vanina"
-let genero //= "F"
+let nombre = "Vanina"
+let genero = "F"
 let arrResumen = []
 let respCategorias = 0
 
@@ -87,8 +87,15 @@ dropCategoria.onchange = () => {
     pProducto.innerHTML = ``
   }
 }
+console.log(dropProducto.innerHTML);
 
 
+// dropProducto.onchange = () => {
+
+//   console.log(dropProducto.options[dropProducto.selectedIndex].innerText);
+//   // if (dropProducto.options[dropProducto.selectedIndex].innerText === "Papelería") {
+//   // }
+// }
 
 
 // Comprobamos el password
@@ -139,68 +146,68 @@ let jabon_liquido = new Producto(09, "Jabon liquido", "ALF-JABON-5480", 36.79, 1
 
 
 // console.log(fichaTecnica(boligrafo));
-function inicioCuestionario() {
-  respCategorias = parseInt(
-    prompt("Categorias: \n 1: Papelería \n 2: Cafetería  \n 3: Limpieza\n Para salir cualquier otra cosa")
-  );
-  categorias(respCategorias);
-}
+// function inicioCuestionario() {
+//   respCategorias = parseInt(
+//     prompt("Categorias: \n 1: Papelería \n 2: Cafetería  \n 3: Limpieza\n Para salir cualquier otra cosa")
+//   );
+//   categorias(respCategorias);
+// }
 
-// este se encargara de resolver las categorias
-function categorias(respuesta) {
-  let respProducto;
-  if (respuesta === 1) {
-    respProducto = parseInt(prompt("Escoge que poducto de Papelería quieres que te muestre: \n 1: Boligrafo \n 2: Goma \n 3: Sacapuntas  \n Para salir cualquier otra cosa"));
-    if (respProducto == 1) { respProducto = boligrafo } else if (respProducto == 2) { respProducto = goma } else if (respProducto == 3) { respProducto = sacapuntas }
+// // este se encargara de resolver las categorias
+// function categorias(respuesta) {
+//   let respProducto;
+//   if (respuesta === 1) {
+//     respProducto = parseInt(prompt("Escoge que poducto de Papelería quieres que te muestre: \n 1: Boligrafo \n 2: Goma \n 3: Sacapuntas  \n Para salir cualquier otra cosa"));
+//     if (respProducto == 1) { respProducto = boligrafo } else if (respProducto == 2) { respProducto = goma } else if (respProducto == 3) { respProducto = sacapuntas }
 
-  } else if (respuesta == 2) {
-    respProducto = parseInt(prompt("Escoge que poducto de Cafetería quieres que te muestre: \n 1: Nescafe Clasico 60g \n 2: Cafe Molido Intenso Veracruz, 454g \n 3: Te De Hierbabuena \n Para salir cualquier otra cosa"));
-    if (respProducto == 1) { respProducto = nescafe } else if (respProducto == 2) { respProducto = cafe_molido } else if (respProducto == 3) { respProducto = te_de_hierbabuena }
+//   } else if (respuesta == 2) {
+//     respProducto = parseInt(prompt("Escoge que poducto de Cafetería quieres que te muestre: \n 1: Nescafe Clasico 60g \n 2: Cafe Molido Intenso Veracruz, 454g \n 3: Te De Hierbabuena \n Para salir cualquier otra cosa"));
+//     if (respProducto == 1) { respProducto = nescafe } else if (respProducto == 2) { respProducto = cafe_molido } else if (respProducto == 3) { respProducto = te_de_hierbabuena }
 
-  } else if (respuesta == 3) {
-    respProducto = parseInt(prompt("Escoge que poducto de Limpieza quieres que te muestre: \n 1: Sanitas\n 2: Papel higienico\n 3: Jabon liquido\n Para salir cualquier otra cosa"));
-    if (respProducto == 1) { respProducto = sanitas } else if (respProducto == 2) { respProducto = papel_higienico } else if (respProducto == 3) { respProducto = jabon_liquido }
+//   } else if (respuesta == 3) {
+//     respProducto = parseInt(prompt("Escoge que poducto de Limpieza quieres que te muestre: \n 1: Sanitas\n 2: Papel higienico\n 3: Jabon liquido\n Para salir cualquier otra cosa"));
+//     if (respProducto == 1) { respProducto = sanitas } else if (respProducto == 2) { respProducto = papel_higienico } else if (respProducto == 3) { respProducto = jabon_liquido }
 
-  }
-  // alert(fichaTecnica(respProducto));
-  arrResumen.push(respProducto);
-  respuesta = prompt(`Quieres ver otro articulo? \n S=Sí N=No`);
-  if (respuesta === "si" || respuesta === "Si" || respuesta === "sí" || respuesta === "Sí" || respuesta === "s" || respuesta === "S" || respuesta === "") {
-    inicioCuestionario();
-  } else {
-    do {
-      respuesta = parseInt(prompt("los " + arrResumen.length + " articulos que vio son:\n" + resumenVistos()));
-      if (respuesta >= 1 && respuesta <= arrResumen.length) {
-        arrResumen.splice(respuesta - 1, 1)
+//   }
+//   // alert(fichaTecnica(respProducto));
+//   arrResumen.push(respProducto);
+//   respuesta = prompt(`Quieres ver otro articulo? \n S=Sí N=No`);
+//   if (respuesta === "si" || respuesta === "Si" || respuesta === "sí" || respuesta === "Sí" || respuesta === "s" || respuesta === "S" || respuesta === "") {
+//     inicioCuestionario();
+//   } else {
+//     do {
+//       respuesta = parseInt(prompt("los " + arrResumen.length + " articulos que vio son:\n" + resumenVistos()));
+//       if (respuesta >= 1 && respuesta <= arrResumen.length) {
+//         arrResumen.splice(respuesta - 1, 1)
 
-      }
+//       }
 
-    } while (respuesta >= 1 && respuesta <= arrResumen.length + 1);
-  }
-}
-bye("Bye " + nombre + ", hasta pronto!");
-
-
-function resumenVistos() {
-  let resumen = ""
-  let valorTotal = 0
-  for (i = 0; i < arrResumen.length; i++) {
-    resumen = resumen + (i + 1) + ") " + arrResumen[i].nombre + " ===> $" + arrResumen[i].precio + "\n"
-    valorTotal = valorTotal + arrResumen[i].precio
-  }
-  resumen = `${resumen}    Total:$ ${valorTotal} \nPara quitar un articulo pon el numero correspondiente o pon 0 para salir`
-  return resumen
-}
+//     } while (respuesta >= 1 && respuesta <= arrResumen.length + 1);
+//   }
+// }
+// bye("Bye " + nombre + ", hasta pronto!");
 
 
+// function resumenVistos() {
+//   let resumen = ""
+//   let valorTotal = 0
+//   for (i = 0; i < arrResumen.length; i++) {
+//     resumen = resumen + (i + 1) + ") " + arrResumen[i].nombre + " ===> $" + arrResumen[i].precio + "\n"
+//     valorTotal = valorTotal + arrResumen[i].precio
+//   }
+//   resumen = `${resumen}    Total:$ ${valorTotal} \nPara quitar un articulo pon el numero correspondiente o pon 0 para salir`
+//   return resumen
+// }
 
-function fichaTecnica(elemento) {
-  let ficha = " Articulo:   " + elemento.nombre +
-    "\n Modelo:     " + elemento.modelo +
-    "\n Precio:     $" + elemento.precio + " ( + $" + elemento.iva + " de I.V.A ) " +
-    "\n Inventario: " + elemento.inventario + " piezas"
-  return ficha
-}
+
+
+// function fichaTecnica(elemento) {
+//   let ficha = " Articulo:   " + elemento.nombre +
+//     "\n Modelo:     " + elemento.modelo +
+//     "\n Precio:     $" + elemento.precio + " ( + $" + elemento.iva + " de I.V.A ) " +
+//     "\n Inventario: " + elemento.inventario + " piezas"
+//   return ficha
+// }
 function sleep(milliseconds) {
   const date = Date.now();
   let currentDate = null;
