@@ -55,47 +55,48 @@ pregCategoria.innerHTML = `Favor de escoger una categoria`
 
 
 dropCategoria.onchange = () => {
-  if (dropCategoria.options[dropCategoria.selectedIndex].innerText === "Papelería") {
+  console.log(dropCategoria.options[dropCategoria.selectedIndex].value);
+  if (dropCategoria.options[dropCategoria.selectedIndex].value == 1) {
     pregProducto.innerHTML = `Favor de escoger un producto`
     pProducto.innerHTML = `
       <select id="dropProducto">
-        <option>Selecciona uno...</option>
-        <option> Boligrafo </option>
-        <option> Goma </option>
-        <option> Sacapuntas </option>
+        <option value="0">Selecciona uno...</option>
+        <option value="1"> Boligrafo </option>
+        <option value="2"> Goma </option>
+        <option value="3"> Sacapuntas </option>
       </select>`
-  } else if (dropCategoria.options[dropCategoria.selectedIndex].innerText === "Cafetería") {
+  } else if (dropCategoria.options[dropCategoria.selectedIndex].value == 2) {
     pregProducto.innerHTML = `Favor de escoger un producto`
     pProducto.innerHTML = `
       <select id="dropProducto">
-        <option>Selecciona uno...</option>
-        <option> Nescafe Clasico </option>
-        <option> Cafe Molido </option>
-        <option> Te de Hierbabuena </option>
+        <option value="0">Selecciona uno...</option>
+        <option value="1"> Nescafe Clasico </option>
+        <option value="2"> Cafe Molido </option>
+        <option value="3"> Te de Hierbabuena </option>
       </select>`
-  } else if (dropCategoria.options[dropCategoria.selectedIndex].innerText === "Limpieza") {
+  } else if (dropCategoria.options[dropCategoria.selectedIndex].value == 3) {
     pregProducto.innerHTML = `Favor de escoger un producto`
     pProducto.innerHTML = `
       <select id="dropProducto">
-        <option>Selecciona uno...</option>
-        <option> Sanitas </option>
-        <option> Papel higienico </option>
-        <option> Jabon liquido </option>
+        <option value="0">Selecciona uno...</option>
+        <option value="1"> Sanitas </option>
+        <option value="2"> Papel higienico </option>
+        <option value="3"> Jabon liquido </option>
       </select>`
   } else {
     pregProducto.innerHTML = ``
     pProducto.innerHTML = ``
   }
 }
-console.log(dropProducto.innerHTML);
 
 
-// dropProducto.onchange = () => {
 
-//   console.log(dropProducto.options[dropProducto.selectedIndex].innerText);
-//   // if (dropProducto.options[dropProducto.selectedIndex].innerText === "Papelería") {
-//   // }
-// }
+dropProducto.onchange = () => {
+
+  console.log(dropProducto.options[dropProducto.selectedIndex].value);
+  //   // if (dropProducto.options[dropProducto.selectedIndex].innerText === "Papelería") {
+  //   // }
+}
 
 
 // Comprobamos el password
