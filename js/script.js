@@ -44,7 +44,7 @@ let pregCategoria = document.getElementById("pregCategoria");
 let dropProducto = document.getElementById("dropProducto");
 let pregProducto = document.getElementById("pregProducto");
 let pProducto = document.getElementById("pProducto");
-
+let card = document.getElementById("card");
 
 
 // -------------------------------------------
@@ -56,47 +56,58 @@ pregCategoria.innerHTML = `Favor de escoger una categoria`
 
 dropCategoria.onchange = () => {
   console.log(dropCategoria.options[dropCategoria.selectedIndex].value);
-  if (dropCategoria.options[dropCategoria.selectedIndex].value == 1) {
+  if (dropCategoria.options[dropCategoria.selectedIndex].value == "Papelería") {
     pregProducto.innerHTML = `Favor de escoger un producto`
     pProducto.innerHTML = `
-      <select id="dropProducto">
+    <select id="dropProducto", onChange="test(options[selectedIndex].value)">
         <option value="0">Selecciona uno...</option>
-        <option value="1"> Boligrafo </option>
-        <option value="2"> Goma </option>
-        <option value="3"> Sacapuntas </option>
+        <option value="Boligrafo"> Boligrafo </option>
+        <option value="Goma"> Goma </option>
+        <option value="Sacapuntas"> Sacapuntas </option>
       </select>`
-  } else if (dropCategoria.options[dropCategoria.selectedIndex].value == 2) {
+  } else if (dropCategoria.options[dropCategoria.selectedIndex].value == "Cafetería") {
     pregProducto.innerHTML = `Favor de escoger un producto`
     pProducto.innerHTML = `
-      <select id="dropProducto">
+    <select id="dropProducto", onChange="test(options[selectedIndex].value)">
         <option value="0">Selecciona uno...</option>
-        <option value="1"> Nescafe Clasico </option>
-        <option value="2"> Cafe Molido </option>
-        <option value="3"> Te de Hierbabuena </option>
+        <option value="Nescafe Clasico"> Nescafe Clasico </option>
+        <option value="Cafe Molido"> Cafe Molido </option>
+        <option value="Te de Hierbabuena"> Te de Hierbabuena </option>
       </select>`
-  } else if (dropCategoria.options[dropCategoria.selectedIndex].value == 3) {
+  } else if (dropCategoria.options[dropCategoria.selectedIndex].value == "Limpieza") {
     pregProducto.innerHTML = `Favor de escoger un producto`
     pProducto.innerHTML = `
-      <select id="dropProducto">
+      <select id="dropProducto", onChange="test(options[selectedIndex].value)">
         <option value="0">Selecciona uno...</option>
-        <option value="1"> Sanitas </option>
-        <option value="2"> Papel higienico </option>
-        <option value="3"> Jabon liquido </option>
+        <option value="Sanitas"> Sanitas </option>
+        <option value="Papel higienico"> Papel higienico </option>
+        <option value="Jabon liquido"> Jabon liquido </option>
       </select>`
   } else {
     pregProducto.innerHTML = ``
     pProducto.innerHTML = ``
   }
 }
+const contenedor = document.getElementById("container");
+// contenedor.innerHTML = "";
 
-
-
-dropProducto.onchange = () => {
-
-  console.log(dropProducto.options[dropProducto.selectedIndex].value);
-  //   // if (dropProducto.options[dropProducto.selectedIndex].innerText === "Papelería") {
-  //   // }
+function test(info) {
+  console.log(info);
+  let cardInfo = document.createElement("div");
+  cardInfo.className = "card"
+  cardInfo.style = "width: 18rem;"
+  cardInfo.innerHTML = `
+  <img src="./Img/productos/01.jpg" alt="1">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+`
+  contenedor.appendChild(cardInfo);
+  // card.innerHTML = cardInfo
 }
+
 
 
 // Comprobamos el password
