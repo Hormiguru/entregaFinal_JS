@@ -93,7 +93,7 @@ const contenedor = document.getElementById("container");
 
 function test(info) {
   console.log(info);
-  let cardInfo = document.createElement("div");
+  const cardInfo = document.createElement("div");
   cardInfo.className = "card"
   cardInfo.style = "width: 18rem;"
   cardInfo.innerHTML = `
