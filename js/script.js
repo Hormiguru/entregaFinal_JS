@@ -194,6 +194,82 @@ function catalogo() {
   });
 }
 
+let modalCarrito = document.getElementById("carrito");
+const agregarAlCarrito = (indiceDelArrayProducto) => {
+  //findIndex devuelve el indice del elemento encontrado
+  // si no encuentra nada devuelve menos 1 (-1)
+  const indiceEncontradoCarrito = cart.findIndex((elemento) => {
+    return elemento.id === productos[indiceDelArrayProducto].id;
+  });
+  if (indiceEncontradoCarrito === -1) {
+    //agrego el producto
+    const productoAgregar = productos[indiceDelArrayProducto];
+    productoAgregar.cantidad = 1;
+    cart.push(productoAgregar);
+
+    dibujarCarrito();
+  } else {
+    //incremento cantidad
+    cart[indiceEncontradoCarrito].cantidad += 1;
+
+    dibujarCarrito();
+  }
+};
+const dibujarCarrito = () => {
+  let total = 0;
+  modalCarrito.className = "carrito";
+  modalCarrito.innerHTML = "";
+  if (cart.length > 0) {
+    cart.forEach((producto, indice) => {
+      total = total + producto.precio * producto.cantidad;
+      const carritoContainer = document.createElement("div");
+      carritoContainer.className = "producto-carrito";
+      carritoContainer.innerHTML = `
+        <img class="car-img" src="./Img/productos/${producto.id}.jpg"/>
+        <div class="product-details">
+          ${producto.nombre}
+        </div>
+        <div class="product-details" > Cantidad: ${producto.cantidad}</div>
+        <div class="product-details"> Precio: $`+ parseFloat(producto.precio).toFixed(2)+`</div>
+        <div class="product-details"> Subtotal: $ `+parseFloat(producto.precio * producto.cantidad).toFixed(2)+`</div>
+        <button class="btn btn-danger"  id="remove-product" onClick="removeProduct(${indice})">Eliminar producto</button>
+         `;
+      modalCarrito.appendChild(carritoContainer);
+    });
+    // Dibujo el total y lo appendeo en el div capturado y guardado en la variable modalCarrito
+    const totalContainer = document.createElement("div");
+    totalContainer.className = "total-carrito";
+    totalContainer.innerHTML = `<div class= "total"> TOTAL $ ` +parseFloat(total).toFixed(2) + `</div>
+    <button class= "btn btn-danger finalizar" id="finalizar" onClick="finalizarCompra()"> FINALIZAR COMPRA </button>`;
+    modalCarrito.appendChild(totalContainer);
+  } else {
+    modalCarrito.classList.remove("cart");
+  }
+};
+
+let cart = [];
+
+const removeProduct = (indice) => {
+  cart.splice(indice, 1);
+
+  dibujarCarrito();
+};
+const finalizarCompra = () => {
+  const total = document.getElementsByClassName("total")[0].innerHTML;
+  modalCarrito.innerHTML = "";
+  const compraFinalizada = `<div class="compra-finalizada"><p class="compra-parrafo"> La compra se completo    ${total} </p></div>`;
+  modalCarrito.innerHTML = compraFinalizada;
+};
+
+
+const mostrarMensaje = () => {
+  const nombreCliente = document.getElementById("nombre").value;
+  const domicilioCliente = document.getElementById("domicilio").value;
+  modalCarrito.innerHTML = "";
+  let mensaje = `<div class="mensaje-final">Gracias ${nombreCliente} por su compra! en 72 horas recibira su paquete en ${domicilioCliente} </div>`;
+  modalCarrito.innerHTML = mensaje;
+};
+
 console.log(`es el nombre ${nombre}`);
 console.log(`es el genero ${genero}`);
 console.log(`es el buenas ${buenas}`);
