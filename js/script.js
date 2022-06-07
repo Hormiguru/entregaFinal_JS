@@ -131,34 +131,12 @@ function bienvenida() {
     </div>
   </div>
   `
-  Toastify({
-    text: `      ${buenas} ${nombre} \n Bienvenid${preferencia(genero)} a Papeleria Alfa\n`,
-    duration: 3000,
-    close: false,
-    gravity: "top", // `top` or `bottom`
-    position: "right", // `left`, `center` or `right`
-    stopOnFocus: true, // Prevents dismissing of toast on hover
-    style: {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
-    },
-    callback: function () { },
-  }).showToast();
-  Toastify({
-    text: `Si no eres ${nombre} da click aqui`,
-    oldestFirst: true,
-    duration: 4000,
-    newWindow: true,
-    close: false,
-    gravity: "top", // `top` or `bottom`
-    position: "right", // `left`, `center` or `right`
-    stopOnFocus: true, // Prevents dismissing of toast on hover
-    onClick: function () { otroUsuario() }, // Callback after click
-    style: {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
-    },
-  }).showToast();
-
-
+  Swal.fire({
+    icon: 'success',
+    title: `Bienvenid${preferencia(genero)} a Papeleria Alfa`,
+    text: `${buenas} ${nombre}`,
+    footer: `<a href="javascript:otroUsuario();">Si no eres ${nombre} da click aqui</a>`
+  })
   catalogo()
 }
 
@@ -207,11 +185,12 @@ const agregarAlCarrito = (indiceDelArrayProducto) => {
     productoAgregar.cantidad = 1;
     cart.push(productoAgregar);
 
+    toasty(`${productoAgregar.nombre} agregado`);
     dibujarCarrito();
   } else {
     //incremento cantidad
     cart[indiceEncontradoCarrito].cantidad += 1;
-
+    toasty(`${productos[indiceDelArrayProducto].cantidad} ${productos[indiceDelArrayProducto].nombre}`);
     dibujarCarrito();
   }
 };
@@ -250,10 +229,11 @@ const dibujarCarrito = () => {
 let cart = [];
 
 const removeProduct = (indice) => {
+  toasty(`${cart[indice].nombre} Eliminado`)
   cart.splice(indice, 1);
-
   dibujarCarrito();
 };
+
 const finalizarCompra = () => {
   const total = document.getElementsByClassName("total")[0].innerHTML;
   modalCarrito.innerHTML = "";
@@ -284,6 +264,23 @@ function preferencia(genero) {
   // ya definido el genero cambiamos los parametros que se usaran
   (genero == "Femenino") ? genero = "a" : (genero == "Masculino") ? genero = "o" : genero = "e";
   return genero;
+}
+function toasty(texto, onClick) {
+  Toastify({
+    text: texto,
+    oldestFirst: true,
+    duration: 4000,
+    newWindow: true,
+    close: false,
+    gravity: "top", // `top` or `bottom`
+    position: "right", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    onClick: function () { onClick }, // Callback after click
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+  }).showToast();
+
 }
 
 function sleep(milliseconds) {
