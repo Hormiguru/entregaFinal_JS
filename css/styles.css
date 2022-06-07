@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body {
+  background-color: #eeeeee; }
+
+.bg-verde {
+  background-color: #839635; }
+
+.bg-ladObs {
+  background-color: #96453C; }
+
+.bg-azul {
+  background-color: #9cacc0; }
+
+.card-text {
+  font-size: 14px;
+}
+.card-title {
+  font-size: 18px;
+}

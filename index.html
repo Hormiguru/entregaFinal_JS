@@ -11,33 +11,27 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+
+    <!-- Toastify css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <!-- mis estilos -->
+    <link rel="stylesheet" href="./css/styles.css" />
     <title>Entrega Final</title>
   </head>
   <body>
-    <header></header>
-    <main>
-      <p class="text-center" id="bienvenida"></p>
-      <p class="text-center" id="saludo"></p>
-      <hr />
+    <header>
+      <h1 class="titulo">Papeleria Alfa</h1>
 
-      <div class="container productsContainer" id="container">
-        <div class="row">
-          <div class="col">
-            <p id="pregCategoria"></p>
-            <p>
-              <select id="dropCategoria">
-                <option value="0">Selecciona uno...</option>
-                <option value="Papelería">Papelería</option>
-                <option value="Cafetería">Cafetería</option>
-                <option value="Limpieza">Limpieza</option>
-              </select>
-            </p>
-            <p id="pregProducto"></p>
-            <p id="pProducto"></p>
-          </div>
-          <div class="col" id="cardContainer"></div>
-        </div>
-      </div>
+      <!-- tal vez poner un menu aqui y un slide -->
+    </header>
+    <main>
+      <div id="container" class="row"></div>
+      <div id="carrito"></div>
+      <a name="carrito"></a>
     </main>
     <footer>
       <hr />
@@ -50,6 +44,20 @@
         <!-- <img src="#" alt="comentario del tutor" /> -->
       </div>
     </footer>
+
+    <!-- Toastify -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+
+    <!-- sweet alert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- mi JS -->
     <script src="./js/script.js"></script>
 
     <!-- Js de Bootstrap -->
