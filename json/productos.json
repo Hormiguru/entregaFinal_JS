@@ -1,0 +1,84 @@
+[
+        {
+            "id": 1 ,
+            "categoria": "papeleria",
+            "nombre": "Boligrafo",
+            "modelo": "BIC-BOL-M250CA",
+            "precio": 12,
+            "inventario": 40,
+            "descripcion":"Las plumas de mejor calidad en todo mexico"
+        },
+        {
+            "id": 2,
+            "categoria": "papeleria",
+            "nombre": "Goma",
+            "modelo": "AZO-GOM-6590",
+            "precio": 21.35,
+            "inventario": 15,
+            "descripcion":"Las gomas de mejor calidad en todo mexico"
+        },
+        {
+            "id": 3,
+            "categoria": "papeleria",
+            "nombre": "Sacapuntas",
+            "modelo": "ACO-SAC-P3888",
+            "precio": 785.79,
+            "inventario": 3,
+            "descripcion":"Los sacapuntas de mejor calidad en todo mexico"
+
+        },
+        {
+            "id": 4,
+            "categoria": "cafeteria",
+            "nombre": "Nescafe Clasico 60g",
+            "modelo": "NES-NCF-60GR",
+            "precio": 66.35,
+            "inventario": 16,
+            "descripcion":"El cafe de mejor calidad en todo mexico"
+        },
+        {
+            "id": 5,
+            "categoria": "cafeteria",
+            "nombre": "Cafe Molido Intenso",
+            "modelo": "CAP-CAF-VER",
+            "precio": 143.31,
+            "inventario": 22,
+            "descripcion":"El cafe molido de mejor calidad en todo mexico"
+        },
+        {
+            "id": 6,
+            "categoria": "cafeteria",
+            "nombre": "Te De Hierbabuena",
+            "modelo": "MCC-TE-HIERB25",
+            "precio": 37.89,
+            "inventario": 10,
+            "descripcion":"el té de mejor calidad en todo mexico"
+        },
+        {
+            "id": 7,
+            "categoria": "limpieza",
+            "nombre": "Sanitas",
+            "modelo": "LKC-TOAI-92231",
+            "precio": 219.20,
+            "inventario": 50,
+            "descripcion":"Las toallitas de mejor calidad en todo mexico"
+        },
+        {
+            "id": 8,
+            "categoria": "limpieza",
+            "nombre": "Papel higienico",
+            "modelo": "TOR-HIGT-700148",
+            "precio": 558.65,
+            "inventario": 100,
+            "descripcion":"El papel higienico de mejor calidad en todo mexico"
+        },
+        {
+            "id": 9,
+            "categoria": "limpieza",
+            "nombre": "Jabon liquido",
+            "modelo": "ALF-JABON-5480",
+            "precio": 36.79,
+            "inventario": 78,
+            "descripcion":"El jabon de mejor calidad en todo mexico"
+        }
+]

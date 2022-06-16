@@ -12,81 +12,14 @@ let buenas;
   (hora >= 12 && hora < 19) ? buenas = "Buenas tardes" :
     buenas = "Buenas noches";
 
-// los productos
-let productos = [
-  {
-    id: 01,
-    categoria: "papeleria",
-    nombre: "Boligrafo",
-    modelo: "BIC-BOL-M250CA",
-    precio: 12,
-    inventario: 40,
-  },
-  {
-    id: 02,
-    categoria: "papeleria",
-    nombre: "Goma",
-    modelo: "AZO-GOM-6590",
-    precio: 21.35,
-    inventario: 15,
-  },
-  {
-    id: 03,
-    categoria: "papeleria",
-    nombre: "Sacapuntas",
-    modelo: "ACO-SAC-P3888",
-    precio: 785.79,
-    inventario: 3,
-  },
-  {
-    id: 04,
-    categoria: "cafeteria",
-    nombre: "Nescafe Clasico 60g",
-    modelo: "NES-NCF-60GR",
-    precio: 66.35,
-    inventario: 16,
-  },
-  {
-    id: 05,
-    categoria: "cafeteria",
-    nombre: "Cafe Molido Intenso",
-    modelo: "CAP-CAF-VER",
-    precio: 143.31,
-    inventario: 22,
-  },
-  {
-    id: 06,
-    categoria: "cafeteria",
-    nombre: "Te De Hierbabuena",
-    modelo: "MCC-TE-HIERB25",
-    precio: 37.89,
-    inventario: 10,
-  },
-  {
-    id: 07,
-    categoria: "limpieza",
-    nombre: "Sanitas",
-    modelo: "LKC-TOAI-92231",
-    precio: 219.20,
-    inventario: 50,
-  },
-  {
-    id: 08,
-    categoria: "limpieza",
-    nombre: "Papel higienico",
-    modelo: "TOR-HIGT-700148",
-    precio: 558.65,
-    inventario: 100,
-  },
-  {
-    id: 09,
-    categoria: "limpieza",
-    nombre: "Jabon liquido",
-    modelo: "ALF-JABON-5480",
-    precio: 36.79,
-    inventario: 78,
-  },
-]
+let productos = []
+async function obtenerProductos() {
+  const productos = await fetch("./json/productos.json")
+    .then((response) => response.json())
+    .then((data) => data);
+  return productos
+}
+
 // ----------------------------------------------------  
 // si no tenermos aun el nombre o el genero preferido, se lo solicitamos
 if (nombre == null || genero == null) {
@@ -124,10 +57,10 @@ function bienvenida() {
   contenedor.innerHTML = `
   <div class="m-2 p-2">
     <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-success">Todos</button>
-    <button type="button" class="btn btn-success">Papeleria</button>
-    <button type="button" class="btn btn-success">Cafeteria</button>
-    <button type="button" class="btn btn-success">Limpieza</button>
+    <button type="button" class="btn btn-success"id="btn-todos">Todos</button>
+    <button type="button" class="btn btn-success"id="btn-papeleria">Papeleria</button>
+    <button type="button" class="btn btn-success"id="btn-cafeteria">Cafeteria</button>
+    <button type="button" class="btn btn-success"id="btn-limpieza">Limpieza</button>
     </div>
   </div>
   `
@@ -137,15 +70,23 @@ function bienvenida() {
     text: `${buenas} ${nombre}`,
     footer: `<a href="javascript:otroUsuario();">Si no eres ${nombre} da click aqui</a>`
   })
-  catalogo()
+  listaProductos()
 }
 
+//conseguimos los productos para mandarselos al catalogo
+async function listaProductos() {
+  const productos = await obtenerProductos();
+  catalogo(productos);
+}
 
-function catalogo() {
+// arrancamos el catalogo
+function catalogo(productos) {
+  console.log(productos[1].id);
   let tar = document.createElement("div");
   tar.classList.add("row", "row-cols-auto", "justify-content-around", "m-2", "p-2");
   contenedor.appendChild(tar);
   productos.forEach((producto, indice) => {
+
     let card = document.createElement(`div`);
     card.classList.add("card", "col", "m-2", "border-success", "border-3", "bg-success", "mt-1");
     card.style = "--bs-bg-opacity: .05;"
@@ -154,34 +95,36 @@ function catalogo() {
     card.style.width = "15rem";
     // style("width: 18rem;");
     let html = `
-    <img src="./Img/productos/${producto.id}.jpg" alt="${producto.nombre}" class="m-2 rounded-circle  ">
-      <div class="card-body border border-secondary mb-4 bg-light">
-        <h5 class="card-title">${producto.nombre}</h5>
-        <p class="card-text">
-        Precio: ${producto.precio}<br>
-        Modelo: ${producto.modelo}<br>
-        Iva: 16% (`+ "$" + parseFloat(producto.precio * (16 / 100)).toFixed(2) + `)<br>
-        Inventario: ${producto.inventario}<br></p>
-        </p>
-        <p class="card-text"></p>
-        <a href="#cart" class="btn btn-success" onClick="agregarAlCarrito(${indice})">Comprar</a>
-      </div>
-        `;
+      <img src="./Img/productos/${producto.id}.jpg" alt="${producto.nombre}" class="m-2 rounded-circle  ">
+        <div class="card-body border border-secondary mb-4 bg-light">
+          <h5 class="card-title">${producto.nombre}</h5>
+          <p class="card-text">
+          Precio: ${producto.precio}<br>
+          Modelo: ${producto.modelo}<br>
+          Iva: 16% (`+ "$" + parseFloat(producto.precio * (16 / 100)).toFixed(2) + `)<br>
+          Inventario: ${producto.inventario}<br>
+          Descripcion:<br>
+          ${producto.descripcion}<br>
+          </p>
+          <p class="card-text"></p>
+          <a href="#cart" class="btn btn-success" onClick="agregarAlCarrito(${productos},${indice})">Comprar</a>
+        </div>
+          `;
     card.innerHTML = html;
     tar.appendChild(card);
   });
 }
 
 let modalCarrito = document.getElementById("carrito");
-const agregarAlCarrito = (indiceDelArrayProducto) => {
+const agregarAlCarrito = (idProducto) => {
   //findIndex devuelve el indice del elemento encontrado
   // si no encuentra nada devuelve menos 1 (-1)
-  const indiceEncontradoCarrito = cart.findIndex((elemento) => {
-    return elemento.id === productos[indiceDelArrayProducto].id;
+  const idEncontrado = cart.findIndex((elemento) => {
+    return elemento.id === productos[idProducto].id;
   });
-  if (indiceEncontradoCarrito === -1) {
+  if (idEncontrado === -1) {
     //agrego el producto
-    const productoAgregar = productos[indiceDelArrayProducto];
+    const productoAgregar = productos[idProducto];
     productoAgregar.cantidad = 1;
     cart.push(productoAgregar);
 
@@ -189,8 +132,8 @@ const agregarAlCarrito = (indiceDelArrayProducto) => {
     dibujarCarrito();
   } else {
     //incremento cantidad
-    cart[indiceEncontradoCarrito].cantidad += 1;
-    toasty(`${productos[indiceDelArrayProducto].cantidad} ${productos[indiceDelArrayProducto].nombre}`);
+    cart[idEncontrado].cantidad += 1;
+    toasty(`${productos[idProducto].cantidad} ${productos[idProducto].nombre}`);
     dibujarCarrito();
   }
 };
@@ -265,7 +208,7 @@ function preferencia(genero) {
   (genero == "Femenino") ? genero = "a" : (genero == "Masculino") ? genero = "o" : genero = "e";
   return genero;
 }
-function toasty(texto, onClick) {
+function toasty(texto) {
   Toastify({
     text: texto,
     oldestFirst: true,
@@ -275,7 +218,7 @@ function toasty(texto, onClick) {
     gravity: "top", // `top` or `bottom`
     position: "right", // `left`, `center` or `right`
     stopOnFocus: true, // Prevents dismissing of toast on hover
-    onClick: function () { onClick }, // Callback after click
+    onClick: function () { }, // Callback after click
     style: {
       background: "linear-gradient(to right, #00b09b, #96c93d)",
     },
@@ -295,3 +238,4 @@ function otroUsuario() {
   localStorage.clear();
   window.location.reload();
 }
+
