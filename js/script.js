@@ -13,12 +13,14 @@ let buenas;
     buenas = "Buenas noches";
 
 let productos = []
-async function obtenerProductos() {
-  const productos = await fetch("./json/productos.json")
-    .then((response) => response.json())
-    .then((data) => data);
-  return productos
-}
+fetch("./json/productos.json")
+  .then((response) => response.json())
+  .then((data) => {
+    catalogo(data)
+  })
+
+
+
 
 // ----------------------------------------------------  
 // si no tenermos aun el nombre o el genero preferido, se lo solicitamos
@@ -70,18 +72,12 @@ function bienvenida() {
     text: `${buenas} ${nombre}`,
     footer: `<a href="javascript:otroUsuario();">Si no eres ${nombre} da click aqui</a>`
   })
-  listaProductos()
 }
 
-//conseguimos los productos para mandarselos al catalogo
-async function listaProductos() {
-  const productos = await obtenerProductos();
-  catalogo(productos);
-}
 
 // arrancamos el catalogo
-function catalogo(productos) {
-  console.log(productos[1].id);
+function catalogo(data) {
+  productos = data
   let tar = document.createElement("div");
   tar.classList.add("row", "row-cols-auto", "justify-content-around", "m-2", "p-2");
   contenedor.appendChild(tar);
@@ -107,11 +103,12 @@ function catalogo(productos) {
           ${producto.descripcion}<br>
           </p>
           <p class="card-text"></p>
-          <a href="#cart" class="btn btn-success" onClick="agregarAlCarrito(${productos},${indice})">Comprar</a>
+          <a href="#cart" class="btn btn-success" onClick="agregarAlCarrito(${indice})">Comprar</a>
         </div>
           `;
     card.innerHTML = html;
     tar.appendChild(card);
+
   });
 }
 
@@ -128,12 +125,12 @@ const agregarAlCarrito = (idProducto) => {
     productoAgregar.cantidad = 1;
     cart.push(productoAgregar);
 
-    toasty(`${productoAgregar.nombre} agregado`);
+    toasty(`${productoAgregar.nombre} agregado`, idProducto);
     dibujarCarrito();
   } else {
     //incremento cantidad
     cart[idEncontrado].cantidad += 1;
-    toasty(`${productos[idProducto].cantidad} ${productos[idProducto].nombre}`);
+    toasty(`${productos[idProducto].cantidad} ${productos[idProducto].nombre}`, idProducto);
     dibujarCarrito();
   }
 };
@@ -176,6 +173,13 @@ const removeProduct = (indice) => {
   cart.splice(indice, 1);
   dibujarCarrito();
 };
+
+const removeOne = (indice) => {
+  toasty(`${cart[indice].nombre} -1`)
+  cart[indice].cantidad -= 1
+  dibujarCarrito();
+};
+
 
 const finalizarCompra = () => {
   const total = document.getElementsByClassName("total")[0].innerHTML;
