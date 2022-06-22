@@ -20,8 +20,6 @@ fetch("./json/productos.json")
   })
 
 
-
-
 // ----------------------------------------------------  
 // si no tenermos aun el nombre o el genero preferido, se lo solicitamos
 if (nombre == null || genero == null) {
@@ -56,16 +54,7 @@ function infoUsuario() {
 // Inicia todo aqui
 function bienvenida() {
 
-  contenedor.innerHTML = `
-  <div class="m-2 p-2">
-    <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-success"id="btn-todos">Todos</button>
-    <button type="button" class="btn btn-success"id="btn-papeleria">Papeleria</button>
-    <button type="button" class="btn btn-success"id="btn-cafeteria">Cafeteria</button>
-    <button type="button" class="btn btn-success"id="btn-limpieza">Limpieza</button>
-    </div>
-  </div>
-  `
+  crearMenu("Todos")
   Swal.fire({
     icon: 'success',
     title: `Bienvenid${preferencia(genero)} a Papeleria Alfa`,
@@ -73,7 +62,60 @@ function bienvenida() {
     footer: `<a href="javascript:otroUsuario();">Si no eres ${nombre} da click aqui</a>`
   })
 }
+// escuchador del menu
+function crearMenu(opcionActiva) {
 
+  let botonesMenu = ""
+  let nombreBoton
+  let botonActivo
+  for (let i = 1; i <= 4; i++) {
+    if (i === 1) {
+      nombreBoton = "Todos"
+    } else if (i === 2) {
+      nombreBoton = "Papeleria"
+    } else if (i === 3) {
+      nombreBoton = "Cafeteria"
+    } else if (i === 4) {
+      nombreBoton = "Limpieza"
+    }
+    if (nombreBoton === opcionActiva) { botonActivo = "active" } else { botonActivo = "" }
+    botonesMenu += `<button type="button" class="btn btn-success ${botonActivo}"id="btn-${nombreBoton}" onClick="filtradoProductos('${nombreBoton}')">${nombreBoton}</button>`
+  }
+  if ("Carrito" === opcionActiva) {
+    botonActivo = "active";
+  } else {
+    botonActivo = ""
+  }
+  contenedor.innerHTML = `
+  <div class="m-2 p-2 ">
+    <div class="btn-group" role="group" aria-label="Basic example">
+    ${botonesMenu}
+    </div>
+    <button type="button" class="btn btn-success "id="btn-verCarrito ${botonActivo}" onClick="verCarrito()">Ver 
+    carrito</button>
+  </div>
+  `
+
+}
+
+
+
+
+function filtradoProductos(categoria) {
+  let filtrado
+  fetch("./json/productos.json")
+    .then((response) => response.json())
+    .then((data) => {
+      productos = data
+    })
+  filtrado = productos
+  if (categoria != "Todos") {
+    filtrado = productos.filter(producto => producto.categoria == categoria);
+  }
+  crearMenu(categoria)
+  document.getElementById("carrito").style.display = 'none';
+  catalogo(filtrado)
+}
 
 // arrancamos el catalogo
 function catalogo(data) {
@@ -82,7 +124,6 @@ function catalogo(data) {
   tar.classList.add("row", "row-cols-auto", "justify-content-around", "m-2", "p-2");
   contenedor.appendChild(tar);
   productos.forEach((producto, indice) => {
-
     let card = document.createElement(`div`);
     card.classList.add("card", "col", "m-2", "border-success", "border-3", "bg-success", "mt-1");
     card.style = "--bs-bg-opacity: .05;"
@@ -103,7 +144,7 @@ function catalogo(data) {
           ${producto.descripcion}<br>
           </p>
           <p class="card-text"></p>
-          <a href="#cart" class="btn btn-success" onClick="agregarAlCarrito(${indice})">Comprar</a>
+          <a href="#cart" class="btn btn-success" onClick="agregarAlCarrito(${producto.id - 1})">Comprar</a>
         </div>
           `;
     card.innerHTML = html;
@@ -125,22 +166,29 @@ const agregarAlCarrito = (idProducto) => {
     productoAgregar.cantidad = 1;
     cart.push(productoAgregar);
 
-    toasty(`${productoAgregar.nombre} agregado`, idProducto);
-    dibujarCarrito();
+    toasty(`${productoAgregar.nombre} agregado`);
   } else {
     //incremento cantidad
     cart[idEncontrado].cantidad += 1;
-    toasty(`${productos[idProducto].cantidad} ${productos[idProducto].nombre}`, idProducto);
-    dibujarCarrito();
+    toasty(`${productos[idProducto].nombre} agregado`);
   }
 };
-const dibujarCarrito = () => {
+const verCarrito = () => {
+  document.getElementById("carrito").style.display = 'block';
+  crearMenu("Carrito")
   let total = 0;
   modalCarrito.className = "carrito";
   modalCarrito.innerHTML = "";
+  // para que el boton de - no aparesca si es 1 elemento
+  let btnLess
   if (cart.length > 0) {
     cart.forEach((producto, indice) => {
       total = total + producto.precio * producto.cantidad;
+      if (producto.cantidad > 1) {
+        btnLess = `<button type="button" class="btn btn-primary" id="less-product" onClick="removeOne(${indice})">-</button>`
+      } else {
+        btnLess = ""
+      }
       const carritoContainer = document.createElement("div");
       carritoContainer.className = "producto-carrito";
       carritoContainer.innerHTML = `
@@ -148,7 +196,8 @@ const dibujarCarrito = () => {
         <div class="product-details">
           ${producto.nombre}
         </div>
-        <div class="product-details" > Cantidad: ${producto.cantidad}</div>
+        <div class="product-details" > Cantidad: ${producto.cantidad} ${btnLess}
+        <button type="button" class="btn btn-danger"id="less-product" onClick="addOne(${indice})">+</button></div>
         <div class="product-details"> Precio: $`+ parseFloat(producto.precio).toFixed(2) + `</div>
         <div class="product-details"> Subtotal: $ `+ parseFloat(producto.precio * producto.cantidad).toFixed(2) + `</div>
         <button class="btn btn-danger"  id="remove-product" onClick="removeProduct(${indice})">Eliminar producto</button>
@@ -171,13 +220,18 @@ let cart = [];
 const removeProduct = (indice) => {
   toasty(`${cart[indice].nombre} Eliminado`)
   cart.splice(indice, 1);
-  dibujarCarrito();
+  verCarrito();
 };
 
 const removeOne = (indice) => {
-  toasty(`${cart[indice].nombre} -1`)
+  toasty(`-1 ${cart[indice].nombre}`)
   cart[indice].cantidad -= 1
-  dibujarCarrito();
+  verCarrito();
+};
+const addOne = (indice) => {
+  toasty(`+1 ${cart[indice].nombre}`)
+  cart[indice].cantidad += 1
+  verCarrito();
 };
 
 

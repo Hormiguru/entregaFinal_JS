@@ -1,7 +1,7 @@
 [
         {
             "id": 1 ,
-            "categoria": "papeleria",
+            "categoria": "Papeleria",
             "nombre": "Boligrafo",
             "modelo": "BIC-BOL-M250CA",
             "precio": 12,
@@ -10,7 +10,7 @@
         },
         {
             "id": 2,
-            "categoria": "papeleria",
+            "categoria": "Papeleria",
             "nombre": "Goma",
             "modelo": "AZO-GOM-6590",
             "precio": 21.35,
@@ -19,7 +19,7 @@
         },
         {
             "id": 3,
-            "categoria": "papeleria",
+            "categoria": "Papeleria",
             "nombre": "Sacapuntas",
             "modelo": "ACO-SAC-P3888",
             "precio": 785.79,
@@ -29,7 +29,7 @@
         },
         {
             "id": 4,
-            "categoria": "cafeteria",
+            "categoria": "Cafeteria",
             "nombre": "Nescafe Clasico 60g",
             "modelo": "NES-NCF-60GR",
             "precio": 66.35,
@@ -38,7 +38,7 @@
         },
         {
             "id": 5,
-            "categoria": "cafeteria",
+            "categoria": "Cafeteria",
             "nombre": "Cafe Molido Intenso",
             "modelo": "CAP-CAF-VER",
             "precio": 143.31,
@@ -47,7 +47,7 @@
         },
         {
             "id": 6,
-            "categoria": "cafeteria",
+            "categoria": "Cafeteria",
             "nombre": "Te De Hierbabuena",
             "modelo": "MCC-TE-HIERB25",
             "precio": 37.89,
@@ -56,7 +56,7 @@
         },
         {
             "id": 7,
-            "categoria": "limpieza",
+            "categoria": "Limpieza",
             "nombre": "Sanitas",
             "modelo": "LKC-TOAI-92231",
             "precio": 219.20,
@@ -65,7 +65,7 @@
         },
         {
             "id": 8,
-            "categoria": "limpieza",
+            "categoria": "Limpieza",
             "nombre": "Papel higienico",
             "modelo": "TOR-HIGT-700148",
             "precio": 558.65,
@@ -74,7 +74,7 @@
         },
         {
             "id": 9,
-            "categoria": "limpieza",
+            "categoria": "Limpieza",
             "nombre": "Jabon liquido",
             "modelo": "ALF-JABON-5480",
             "precio": 36.79,
