@@ -22,8 +22,9 @@ fetch("./json/productos.json")
 
 // ----------------------------------------------------  
 // si no tenermos aun el nombre o el genero preferido, se lo solicitamos
+console.log(`nombre ${nombre} genero ${genero}`);
 if (nombre == null || genero == null) {
-  contenedor.innerHTML = `<div class="d-flex justify-content-left"><form class="bg-light border border-success border-3 rounded m-5 p-2 " >
+  contenedor.innerHTML = `<div class="d-flex justify-content-center"><form class="bg-light border border-success border-3 rounded m-5 p-2 " >
   <label for="nombreUsuario">Nombre: </label><br>
   <input type="text" id="nombreUsuario" name="nombreUsuario"><br><br>
   <label>Indica como prefiere que me dirija a ud<br>
@@ -41,6 +42,7 @@ if (nombre == null || genero == null) {
   bienvenida()
 }
 
+
 // lo grabamos en la memoria local
 function infoUsuario() {
   localStorage.setItem("nombreUsuario", document.getElementById("nombreUsuario").value);
@@ -48,6 +50,7 @@ function infoUsuario() {
   nombre = localStorage.getItem("nombreUsuario")
   genero = localStorage.getItem("generoUsuario")
   borrarPantalla()
+  window.location.reload();
   bienvenida()
 }
 
@@ -62,7 +65,9 @@ function bienvenida() {
     footer: `<a href="javascript:otroUsuario();">Si no eres ${nombre} da click aqui</a>`
   })
 }
-// escuchador del menu
+
+
+
 function crearMenu(opcionActiva) {
 
   let botonesMenu = ""
@@ -123,7 +128,8 @@ function catalogo(data) {
   let tar = document.createElement("div");
   tar.classList.add("row", "row-cols-auto", "justify-content-around", "m-2", "p-2");
   contenedor.appendChild(tar);
-  productos.forEach((producto, indice) => {
+  productos.forEach((producto) => {
+
     let card = document.createElement(`div`);
     card.classList.add("card", "col", "m-2", "border-success", "border-3", "bg-success", "mt-1");
     card.style = "--bs-bg-opacity: .05;"
@@ -148,8 +154,9 @@ function catalogo(data) {
         </div>
           `;
     card.innerHTML = html;
-    tar.appendChild(card);
-
+    if (nombre !== null || genero !== null) {
+      tar.appendChild(card);
+    }
   });
 }
 
