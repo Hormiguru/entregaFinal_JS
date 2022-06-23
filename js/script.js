@@ -188,16 +188,24 @@ const verCarrito = () => {
   modalCarrito.innerHTML = "";
   // para que el boton de - no aparesca si es 1 elemento
   let btnLess
+  let colorAlterno = "bg-opacity-10"
   if (cart.length > 0) {
     cart.forEach((producto, indice) => {
       total = total + producto.precio * producto.cantidad;
       if (producto.cantidad > 1) {
         btnLess = `<button type="button" class="btn btn-primary" id="less-product" onClick="removeOne(${indice})">-</button>`
       } else {
-        btnLess = ""
+        btnLess = `<button type="button" class="btn btn-primary" id="less-product" onClick="removeProduct(${indice})">-</button>`
       }
+      if (colorAlterno === " bg-opacity-10") {
+        colorAlterno = " bg-opacity-25"
+      } else {
+        colorAlterno = " bg-opacity-10"
+      }
+
+
       const carritoContainer = document.createElement("div");
-      carritoContainer.className = "producto-carrito";
+      carritoContainer.className = "producto-carrito bg-success" + colorAlterno;
       carritoContainer.innerHTML = `
         <img class="car-img" src="./Img/productos/${producto.id}.jpg"/>
         <div class="product-details">
@@ -207,15 +215,15 @@ const verCarrito = () => {
         <button type="button" class="btn btn-danger"id="less-product" onClick="addOne(${indice})">+</button></div>
         <div class="product-details"> Precio: $`+ parseFloat(producto.precio).toFixed(2) + `</div>
         <div class="product-details"> Subtotal: $ `+ parseFloat(producto.precio * producto.cantidad).toFixed(2) + `</div>
-        <button class="btn btn-danger"  id="remove-product" onClick="removeProduct(${indice})">Eliminar producto</button>
-         `;
+        `;
+      // <button class="btn btn-danger"  id="remove-product" onClick="removeProduct(${indice})">Eliminar</button>
       modalCarrito.appendChild(carritoContainer);
     });
     // Dibujo el total y lo appendeo en el div capturado y guardado en la variable modalCarrito
     const totalContainer = document.createElement("div");
     totalContainer.className = "total-carrito";
     totalContainer.innerHTML = `<div class= "total"> TOTAL $ ` + parseFloat(total).toFixed(2) + `</div>
-    <button class= "btn btn-danger finalizar" id="finalizar" onClick="finalizarCompra()"> FINALIZAR COMPRA </button>`;
+    <button class= "btn btn-success finalizar" id="finalizar" onClick="finalizarCompra()"> FINALIZAR COMPRA </button>`;
     modalCarrito.appendChild(totalContainer);
   } else {
     modalCarrito.classList.remove("cart");
